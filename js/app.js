@@ -6,13 +6,23 @@ randomUsersData
   .catch(err => console.log(err));
 
 
-const displayResults = (data) => {
+const displayResults = data => {
+  let html = '';
+  html += '<main>';
   for (let i = 0; i < data.results.length; i++) {
-    let picture = data.results[i].picture.thumbnail;
-    let firstName = data.results[i].name.first;
-    let lastName = data.results[i].name.last;
-    let email = data.results[i].email;
-    let city = data.results[i].location.city;
-    console.log(picture, firstName, lastName, email, city);
+    html += '<div>';
+    html += '<img src="' + data.results[i].picture.thumbnail + '"/>';
+    html += '<p>';
+    html += '<strong>';
+    html += data.results[i].email;
+    html += '</strong>';
+    html += '<br>';
+    html += data.results[i].name.first + ' ' + data.results[i].name.last;
+    html += '<br>';
+    html += data.results[i].location.city;
+    html += '</p>';
+    html += '</div>';
   }
+  html += '</main>';
+  console.log(html);
 }
