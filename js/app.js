@@ -1,3 +1,9 @@
+// Targeting the DOM elements
+const mainWrapper = document.getElementById('main-wrapper');
+
+
+//  Return the seed needed https://randomuser.me/api/?results=10&&seed=2ab6b57dfd8c77b4
+
 // Fetch the data from the api
 const randomUsersData = fetch('https://randomuser.me/api/?results=10');
 randomUsersData
@@ -10,7 +16,7 @@ const displayResults = data => {
   let html = '';
   html += '<main>';
   for (let i = 0; i < data.results.length; i++) {
-    html += '<div>';
+    html += '<div onClick=(console.log(data)) >';
     html += '<img src="' + data.results[i].picture.thumbnail + '"/>';
     html += '<p>';
     html += '<strong>';
@@ -24,5 +30,6 @@ const displayResults = data => {
     html += '</div>';
   }
   html += '</main>';
-  console.log(html);
+
+  mainWrapper.innerHTML = html;
 }
