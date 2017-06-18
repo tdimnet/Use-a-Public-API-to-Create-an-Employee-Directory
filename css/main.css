@@ -1,0 +1,53 @@
+/***********************************
+  GENERAL SETTINGS
+***********************************/
+body {
+  background-color: #F7F5F0;
+  font-family: 'Open Sans', sans-serif;
+  color: #444;
+}
+
+#main-wrapper {
+  width: 90%;
+  margin: auto;
+}
+
+
+
+/***********************************
+  HEADER SETTINGS
+***********************************/
+header h1 {
+  font-size: 1.6em;
+  font-weight: 400;
+}
+
+
+
+/***********************************
+  GALLERY SETTINGS
+***********************************/
+#gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card {
+  border: 1px solid #bbb;
+  padding: 10px;
+  width: 30%;
+  border-radius: 10px;
+  margin: 10px 0;
+  transition: .4s;
+}
+
+.card:hover {
+  border-color: #999;
+  background-color: #eee;
+}
+
+.card a {
+  text-decoration: none;
+  color: #555;
+}

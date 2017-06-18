@@ -1,19 +1,19 @@
 // Selecting the DOM elements
-const $mainWrapper = $('#main-wrapper');
+const $mainWrapper = $('#gallery');
 
 
 // This function displays the employee details according the ajax request
 function displayEmployee(seed, image, fullname, email, city) {
   let html = `
-    <div class="employeeDetails" >
+    <div class="card" >
       <a href="https://randomuser.me/api/?seed=${seed}">
-        <img src="${image}" alt="" />
-        <h2>${fullname}</h2>
-        <p>
-          ${email}
-          <br>
-          ${city}
-        </p>
+          <img src="${image}" alt="Photograph of ${fullname}" />
+          <h2>${fullname}</h2>
+          <p>
+            ${email}
+            <br>
+            ${city}
+          </p>
       </a>
     </div>
   `;
@@ -39,6 +39,7 @@ function retrieveAllEmployeesData(url) {
   });
 }
 
+// This AJAX Request retrieves the info for one employee only
 function retrieveEmployeeDetails(selectedUrl) {
   $.ajax({
     url: selectedUrl,
@@ -51,11 +52,14 @@ function retrieveEmployeeDetails(selectedUrl) {
 
 // This function uses the retrieveAllEmployeesData function in order to display the ten employees.
 function getEmployees() {
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 12; i++) {
     retrieveAllEmployeesData('https://randomuser.me/api/');
   }
 }
 
+// When the user clicks an employee card
+  // We retrieve which user has been clicked
+  // Then we do the second ajax request
 function showModalWindow(employeeTargeted) {
   const employeeUrl = $('a').attr('href');
   retrieveEmployeeDetails(employeeUrl);
