@@ -1,35 +1,37 @@
-// Targeting the DOM elements
-const mainWrapper = document.getElementById('main-wrapper');
+// Selecting the DOM elements
+const $mainWrapper = $('#main-wrapper');
 
 
-//  Return the seed needed https://randomuser.me/api/?results=10&&seed=2ab6b57dfd8c77b4
-
-// Fetch the data from the api
-const randomUsersData = fetch('https://randomuser.me/api/?results=10');
-randomUsersData
-  .then(data => data.json())
-  .then(data => displayResults(data))
-  .catch(err => console.log(err));
-
-
-const displayResults = data => {
+// This function displays the employee details according the ajax request
+function displayEmployee(email) {
   let html = '';
-  html += '<main>';
-  for (let i = 0; i < data.results.length; i++) {
-    html += '<div onClick=(console.log(data)) >';
-    html += '<img src="' + data.results[i].picture.thumbnail + '"/>';
-    html += '<p>';
-    html += '<strong>';
-    html += data.results[i].email;
-    html += '</strong>';
-    html += '<br>';
-    html += data.results[i].name.first + ' ' + data.results[i].name.last;
-    html += '<br>';
-    html += data.results[i].location.city;
-    html += '</p>';
-    html += '</div>';
-  }
-  html += '</main>';
-
-  mainWrapper.innerHTML = html;
+  html += '<h2>';
+  html += email;
+  html += '</h2>';
+  return html;
 }
+
+// This AJAX Request retrieve the info of the employee
+function retrieveData() {
+  $.ajax({
+    url: 'https://randomuser.me/api/',
+    dataType: 'json',
+    success: function(data) {
+      const employeeObject = data.results[0];
+      const employeeEmail = employeeObject.email;
+      $mainWrapper.append(displayEmployee(employeeEmail));
+    }
+  });
+}
+
+// This function uses the retrieveData function in order to display the ten employees.
+function getEmployees() {
+  for (let i = 0; i < 10; i++) {
+    retrieveData();
+  }
+}
+
+// Once the documents is fully loaded, run the initial function in order to get the employees list
+$(document).ready(function() {
+  getEmployees();
+})
