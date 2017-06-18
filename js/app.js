@@ -3,11 +3,20 @@ const $mainWrapper = $('#main-wrapper');
 
 
 // This function displays the employee details according the ajax request
-function displayEmployee(email) {
-  let html = '';
-  html += '<h2>';
-  html += email;
-  html += '</h2>';
+function displayEmployee(image, fullname, email, city) {
+  let html = `
+    <div class="employeeDetails" >
+      <a>
+        <img src="${image}" alt="" />
+        <h2>${fullname}</h2>
+        <p>
+          ${email}
+          <br>
+          ${city}
+        </p>
+      </a>
+    </div>
+  `;
   return html;
 }
 
@@ -18,8 +27,13 @@ function retrieveData() {
     dataType: 'json',
     success: function(data) {
       const employeeObject = data.results[0];
+      const employeeThumbnail = employeeObject.picture.thumbnail;
+      const employeeName = employeeObject.name.first + ' ' + employeeObject.name.last;
       const employeeEmail = employeeObject.email;
-      $mainWrapper.append(displayEmployee(employeeEmail));
+      const employeeCity = employeeObject.location.city;
+
+      $mainWrapper.append(displayEmployee(employeeThumbnail, employeeName, employeeEmail, employeeCity));
+
     }
   });
 }
@@ -31,7 +45,9 @@ function getEmployees() {
   }
 }
 
-// Once the documents is fully loaded, run the initial function in order to get the employees list
-$(document).ready(function() {
-  getEmployees();
+
+getEmployees();
+
+$mainWrapper.on('click', 'div', function() {
+  console.log(this)
 })
