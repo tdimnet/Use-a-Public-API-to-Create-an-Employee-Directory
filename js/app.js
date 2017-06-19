@@ -3,7 +3,7 @@ const $mainWrapper = $('#gallery');
 
 
 // This function displays the employee details according the ajax request
-function displayEmployee(seed, image, fullname, email, city) {
+function displayEmployeesList(seed, image, fullname, email, city) {
   let html = `
     <div class="card" >
       <a href="https://randomuser.me/api/?seed=${seed}">
@@ -20,6 +20,12 @@ function displayEmployee(seed, image, fullname, email, city) {
   return html;
 }
 
+function displayEmployeeOverlay() {
+  let html = `
+  `;
+  return html
+}
+
 // This AJAX Request retrieve the info of the employee
 function retrieveAllEmployeesData(url) {
   $.ajax({
@@ -33,8 +39,7 @@ function retrieveAllEmployeesData(url) {
       const employeeEmail       = employeeObject.email;
       const employeeCity        = employeeObject.location.city;
 
-      $mainWrapper.append(displayEmployee(employeeSeed, employeeThumbnail, employeeName, employeeEmail, employeeCity));
-
+      $mainWrapper.append(displayEmployeesList(employeeSeed, employeeThumbnail, employeeName, employeeEmail, employeeCity));
     }
   });
 }
