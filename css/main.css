@@ -40,11 +40,12 @@ header h1 {
   border-radius: 10px;
   margin: 10px 0;
   transition: .4s;
+  opacity: .8;
 }
 
 .card:hover {
   border-color: #999;
-  background-color: #eee;
+  opacity: 1;
 }
 
 .card a {

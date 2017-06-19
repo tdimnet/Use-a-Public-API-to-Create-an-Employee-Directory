@@ -26,12 +26,12 @@ function retrieveAllEmployeesData(url) {
     url: url,
     dataType: 'json',
     success: function(data) {
-      const employeeObject = data.results[0];
-      const employeeSeed = data.info.seed;
-      const employeeThumbnail = employeeObject.picture.thumbnail;
-      const employeeName = employeeObject.name.first + ' ' + employeeObject.name.last;
-      const employeeEmail = employeeObject.email;
-      const employeeCity = employeeObject.location.city;
+      const employeeObject      = data.results[0];
+      const employeeSeed        = data.info.seed;
+      const employeeThumbnail   = employeeObject.picture.thumbnail;
+      const employeeName        = employeeObject.name.first + ' ' + employeeObject.name.last;
+      const employeeEmail       = employeeObject.email;
+      const employeeCity        = employeeObject.location.city;
 
       $mainWrapper.append(displayEmployee(employeeSeed, employeeThumbnail, employeeName, employeeEmail, employeeCity));
 
@@ -45,7 +45,14 @@ function retrieveEmployeeDetails(selectedUrl) {
     url: selectedUrl,
     dataType: 'json',
     success: function(data) {
-      console.log(data);
+      const employeeObject        = data.results[0];
+      const employeePhotograph    = employeeObject.picture.large;
+      const employeeFullname      = employeeObject.name.first + ' ' + employeeObject.name.last;
+      const employeeUsername      = employeeObject.login.username;
+      const employeeCellNumber    = employeeObject.cell;
+      const employeeFullAddress   = employeeObject.location.street + ' ' + employeeObject.location.city + ' ' + employeeObject.location.postcode;
+      const employeeBirthDate     = employeeObject.dob;
+      console.log(employeePhotograph, employeeFullname, employeeUsername, employeeCellNumber, employeeBirthDate);
     }
   });
 }
