@@ -1,5 +1,6 @@
 // Selecting the DOM elements
-const $mainWrapper = $('#gallery');
+const $gallery = $('#gallery');
+const $overlay = $('#overlay');
 
 
 // This function displays the employee details according the ajax request
@@ -20,11 +21,6 @@ function displayEmployeesList(seed, image, fullname, email, city) {
   return html;
 }
 
-function displayEmployeeOverlay() {
-  let html = `
-  `;
-  return html
-}
 
 // This AJAX Request retrieve the info of the employee
 function retrieveAllEmployeesData(url) {
@@ -39,50 +35,45 @@ function retrieveAllEmployeesData(url) {
       const employeeEmail       = employeeObject.email;
       const employeeCity        = employeeObject.location.city;
 
-      $mainWrapper.append(displayEmployeesList(employeeSeed, employeeThumbnail, employeeName, employeeEmail, employeeCity));
-    }
-  });
-}
-
-// This AJAX Request retrieves the info for one employee only
-function retrieveEmployeeDetails(selectedUrl) {
-  $.ajax({
-    url: selectedUrl,
-    dataType: 'json',
-    success: function(data) {
-      const employeeObject        = data.results[0];
-      const employeePhotograph    = employeeObject.picture.large;
-      const employeeFullname      = employeeObject.name.first + ' ' + employeeObject.name.last;
-      const employeeUsername      = employeeObject.login.username;
-      const employeeCellNumber    = employeeObject.cell;
-      const employeeFullAddress   = employeeObject.location.street + ' ' + employeeObject.location.city + ' ' + employeeObject.location.postcode;
-      const employeeBirthDate     = employeeObject.dob;
-      console.log(employeePhotograph, employeeFullname, employeeUsername, employeeCellNumber, employeeBirthDate);
+      $gallery.append(displayEmployeesList(employeeSeed, employeeThumbnail, employeeName, employeeEmail, employeeCity));
     }
   });
 }
 
 // This function uses the retrieveAllEmployeesData function in order to display the ten employees.
 function getEmployees() {
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 2; i++) {
     retrieveAllEmployeesData('https://randomuser.me/api/');
   }
 }
 
-// When the user clicks an employee card
-  // We retrieve which user has been clicked
-  // Then we do the second ajax request
-function showModalWindow(employeeTargeted) {
-  const employeeUrl = $('a').attr('href');
-  retrieveEmployeeDetails(employeeUrl);
+// Run all the functions needed
+$(document).ready(function() {
+  getEmployees();
+})
+
+
+// The second Ajax Request
+$gallery.on('click', 'div', function(event) {
+  event.preventDefault();
+  const employeeSeed = $(this).find('a').attr('href');
+  getOneEmployeeDetails(employeeSeed);
+})
+
+
+// This AJAX Request retrieve the info of the employee
+function getOneEmployeeDetails(url) {
+  $.ajax({
+    url: url,
+    dataType: 'json',
+    success: function(data) {
+      console.log(data);
+      $overlay.fadeIn();
+    }
+  });
 }
 
 
-
-// Run all the functions needed
-getEmployees();
-
-$mainWrapper.on('click', 'div', function(event) {
-  event.preventDefault();
-  showModalWindow(this);
+$overlay.click(function() {
+  $overlay.fadeOut();
 })
