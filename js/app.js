@@ -11,24 +11,6 @@ $employeeDetail.append($employeeFullname);
 $overlay.append($employeeDetail);
 $('body').append($overlay);
 
-// This function displays the employee details according the ajax request
-function displayEmployeesList(seed, image, fullname, email, city) {
-  let html = `
-    <div class="card" >
-      <a href="https://randomuser.me/api/?seed=${seed}">
-          <img src="${image}" alt="Photograph of ${fullname}" />
-          <h2>${fullname}</h2>
-          <p>
-            ${email}
-            <br>
-            ${city}
-          </p>
-      </a>
-    </div>
-  `;
-  return html;
-}
-
 
 // This AJAX Request retrieve the info of the employee
 function retrieveAllEmployeesData(url) {
@@ -43,14 +25,30 @@ function retrieveAllEmployeesData(url) {
       const employeeEmail       = employeeObject.email;
       const employeeCity        = employeeObject.location.city;
 
-      $gallery.append(displayEmployeesList(employeeSeed, employeeThumbnail, employeeName, employeeEmail, employeeCity));
+      // Complete the HTML gallery item
+      let html = `
+        <div class="card" >
+          <a href="https://randomuser.me/api/?seed=${employeeSeed}">
+              <img src="${employeeThumbnail}" alt="Photograph of ${employeeName}" />
+              <h2>${employeeName}</h2>
+              <p>
+                ${employeeEmail}
+                <br>
+                ${employeeCity}
+              </p>
+          </a>
+        </div>
+      `;
+
+      // Then display them
+      $gallery.append(html);
     }
   });
 }
 
 // This function uses the retrieveAllEmployeesData function in order to display the ten employees.
 function getEmployees() {
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 12; i++) {
     retrieveAllEmployeesData('https://randomuser.me/api/');
   }
 }
