@@ -1,7 +1,15 @@
 // Selecting the DOM elements
 const $gallery = $('#gallery');
-const $overlay = $('#overlay');
+const $overlay = $('<div id="overlay"></div>');
+const $employeeDetail = $('<div id="employee-detail"></div>');
+const $image = $('<img>');
+const $employeeFullname = $('<h2></h2>');
 
+// Append the elements to the DOM
+$employeeDetail.append($image);
+$employeeDetail.append($employeeFullname);
+$overlay.append($employeeDetail);
+$('body').append($overlay);
 
 // This function displays the employee details according the ajax request
 function displayEmployeesList(seed, image, fullname, email, city) {
@@ -68,7 +76,11 @@ function getOneEmployeeDetails(url) {
     dataType: 'json',
     success: function(data) {
       console.log(data);
-      $overlay.fadeIn();
+      const employeeImage = data.results[0].picture.large;
+      const employeeFullname = data.results[0].name.first + ' ' + data.results[0].name.last;
+      $image.attr('src', employeeImage);
+      $employeeFullname.text(employeeFullname);
+      $overlay.fadeIn('400');
     }
   });
 }
