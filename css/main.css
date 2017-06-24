@@ -85,3 +85,7 @@ header h1 {
   width: auto;
   border-radius: 50%;
 }
+
+#employee-detail .email {
+  text-transform: lowercase;
+}
