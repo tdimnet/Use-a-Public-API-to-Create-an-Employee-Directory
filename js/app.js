@@ -2,6 +2,7 @@
 const $gallery = $('#gallery');
 const $overlay = $('<div id="overlay"></div>');
 const $employeeDetail = $('<div id="employee-detail"></div>');
+const $closeBtn = $('<p id="close">X</p>');
 const $image = $('<img>');
 const $employeeFullname = $('<h2></h2>');
 const $employeeEmail = $('<p class="email"></p>');
@@ -12,6 +13,7 @@ const $employeeLocation = $('<p></p>');
 const $employeeBirthDay = $('<p></p>');
 
 // Append the elements to the DOM
+$employeeDetail.append($closeBtn);
 $employeeDetail.append($image);
 $employeeDetail.append($employeeFullname);
 $employeeDetail.append($employeeEmail);
@@ -98,6 +100,6 @@ function getOneEmployeeDetails(url) {
 }
 
 
-$overlay.click(function() {
+$closeBtn.on('click', function() {
   $overlay.fadeOut();
 })
