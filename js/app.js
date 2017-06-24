@@ -4,6 +4,8 @@ const $gallery = $('#gallery');
 const $overlay = $('<div id="overlay"></div>');
 const $employeeDetail = $('<div id="employee-detail"></div>');
 const $closeBtn = $('<p id="close">X</p>');
+const $previousBtn = $('<p id="previous"><</p>');
+const $nextBtn = $('<p id="next">></p>');
 const $image = $('<img>');
 const $employeeFullname = $('<h2></h2>');
 const $employeeEmail = $('<p class="email"></p>');
@@ -15,6 +17,8 @@ const $employeeBirthDay = $('<p></p>');
 
 // Append the elements to the DOM
 $employeeDetail.append($closeBtn);
+$employeeDetail.append($previousBtn);
+$employeeDetail.append($nextBtn);
 $employeeDetail.append($image);
 $employeeDetail.append($employeeFullname);
 $employeeDetail.append($employeeEmail);
@@ -42,7 +46,7 @@ function retrieveAllEmployeesData(url) {
 
       // Complete the HTML gallery item
       let html = `
-        <div class="card" >
+        <div class="card active">
           <a href="https://randomuser.me/api/?seed=${employeeSeed}">
               <img src="${employeeThumbnail}" alt="Photograph of ${employeeName}" />
               <h2>${employeeName}</h2>
@@ -110,5 +114,14 @@ $closeBtn.on('click', function() {
 // The searching function
 $searchInput.keyup(function() {
   let searchName = $searchInput.val().toLowerCase();
-  console.log(searchName)
-})
+  $('.card').each(function() {
+    let fullname = $(this).find('h2').text();
+    if (fullname.indexOf(searchName) === -1 ) {
+      $(this).removeClass('active');
+      $(this).fadeOut('fast');
+    } else {
+      $(this).addClass('active');
+      $(this).fadeIn('fast');
+    }
+  })
+}).keydown();
