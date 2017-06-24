@@ -82,12 +82,34 @@ $(document).ready(function() {
 $gallery.on('click', 'div', function(event) {
   event.preventDefault();
   const employeeSeed = $(this).find('a').attr('href');
-  getOneEmployeeDetails(employeeSeed);
+  const employeeObj = $(this);
+  getOneEmployeeDetails(employeeSeed, employeeObj);
 })
 
 
+function prevAndNextBtn(employeeObj) {
+
+  $objectPosition = $('.active').index(employeeObj);
+  $activeObjects = $('.active').length;
+
+  if ($objectPosition === 0) {
+    $previousBtn.hide();
+    $nextBtn.show();
+  } else if ($objectPosition === ( $activeObjects -1 )) {
+    $previousBtn.show();
+    $nextBtn.hide();
+  } else {
+    $previousBtn.show();
+    $nextBtn.show();
+  }
+}
+
+
 // This AJAX Request retrieve the info of the employee
-function getOneEmployeeDetails(url) {
+function getOneEmployeeDetails(url, currentObj) {
+
+  prevAndNextBtn(currentObj);
+
   $.ajax({
     url: url,
     dataType: 'json',
@@ -105,10 +127,25 @@ function getOneEmployeeDetails(url) {
 }
 
 
+// When prevArrow is clicked
+$previousBtn.click(function() {
+  // Show the previous image
+  $objectPosition = $('.active').index($(this));
+
+  // for now log is undefined
+  console.log(prevAndNextBtn($('.active').eq($objectPosition - 1).find('a')));
+});
+
+// When nextArrow is clicked
+$nextBtn.click(function() {
+  // Show the next image
+  $objectPosition = $('.active').index($(this));
+});
+
+
 $closeBtn.on('click', function() {
   $overlay.fadeOut();
 })
-
 
 
 // The searching function
@@ -125,3 +162,6 @@ $searchInput.keyup(function() {
     }
   })
 }).keydown();
+
+
+// The navigating function
