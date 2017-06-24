@@ -1,4 +1,5 @@
 // Selecting the DOM elements
+const $searchInput = $('#search-input');
 const $gallery = $('#gallery');
 const $overlay = $('<div id="overlay"></div>');
 const $employeeDetail = $('<div id="employee-detail"></div>');
@@ -102,4 +103,12 @@ function getOneEmployeeDetails(url) {
 
 $closeBtn.on('click', function() {
   $overlay.fadeOut();
+})
+
+
+
+// The searching function
+$searchInput.keyup(function() {
+  let searchName = $searchInput.val().toLowerCase();
+  console.log(searchName)
 })
