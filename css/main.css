@@ -59,7 +59,7 @@ header h1 {
 
 .card {
   border: 1px solid #bbb;
-  padding: 10px;
+  padding: 20px 10px 10px;
   width: 30%;
   border-radius: 10px;
   margin: 10px 0;
@@ -71,6 +71,13 @@ header h1 {
 .card:hover {
   border-color: #999;
   opacity: 1;
+}
+
+.card img {
+  width: 28%;
+  float: left;
+  margin-right: 20px;
+  border-radius: 50%;
 }
 
 .active {

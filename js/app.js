@@ -56,7 +56,7 @@ function retrieveAllEmployeesData(url) {
       // The employee info we need to have
       const employeeObject      = data.results[0];
       const employeeSeed        = data.info.seed;
-      const employeeThumbnail   = employeeObject.picture.thumbnail;
+      const employeeMedium      = employeeObject.picture.medium;
       const employeeName        = employeeObject.name.first + ' ' + employeeObject.name.last;
       const employeeEmail       = employeeObject.email;
       const employeeCity        = employeeObject.location.city;
@@ -65,7 +65,7 @@ function retrieveAllEmployeesData(url) {
       let html = `
         <div class="card active">
           <a href="https://randomuser.me/api/?seed=${employeeSeed}">
-              <img src="${employeeThumbnail}" alt="Photograph of ${employeeName}" />
+              <img src="${employeeMedium}" alt="Photograph of ${employeeName}" />
               <h2>${employeeName}</h2>
               <p>
                 ${employeeEmail}
