@@ -31,6 +31,18 @@ $overlay.append($employeeDetail);
 $('body').append($overlay);
 
 
+// Tracking variables
+var objectPosition;
+var activeObjects;
+
+
+// This function uses the retrieveAllEmployeesData function in order to display the ten employees.
+function getEmployees() {
+  for (let i = 0; i < 12; i++) {
+    retrieveAllEmployeesData('https://randomuser.me/api/');
+  }
+}
+
 // This AJAX Request retrieve the info of the employee
 function retrieveAllEmployeesData(url) {
   $.ajax({
@@ -65,44 +77,6 @@ function retrieveAllEmployeesData(url) {
   });
 }
 
-// This function uses the retrieveAllEmployeesData function in order to display the ten employees.
-function getEmployees() {
-  for (let i = 0; i < 12; i++) {
-    retrieveAllEmployeesData('https://randomuser.me/api/');
-  }
-}
-
-// Run all the functions needed
-$(document).ready(function() {
-  getEmployees();
-})
-
-
-// The second Ajax Request
-$gallery.on('click', 'div', function(event) {
-  event.preventDefault();
-  const employeeSeed = $(this).find('a').attr('href');
-  const employeeObj = $(this);
-  getOneEmployeeDetails(employeeSeed, employeeObj);
-})
-
-
-function prevAndNextBtn(employeeObj) {
-
-  $objectPosition = $('.active').index(employeeObj);
-  $activeObjects = $('.active').length;
-
-  if ($objectPosition === 0) {
-    $previousBtn.hide();
-    $nextBtn.show();
-  } else if ($objectPosition === ( $activeObjects -1 )) {
-    $previousBtn.show();
-    $nextBtn.hide();
-  } else {
-    $previousBtn.show();
-    $nextBtn.show();
-  }
-}
 
 
 // This AJAX Request retrieve the info of the employee
@@ -127,19 +101,52 @@ function getOneEmployeeDetails(url, currentObj) {
 }
 
 
+function prevAndNextBtn(employeeObj) {
+
+  objectPosition = $('.active').index(employeeObj);
+  activeObjects = $('.active').length;
+
+  console.log($('.active').length)
+
+  if ($('.active').length === 1) {
+    $previousBtn.hide();
+    $nextBtn.hide();
+  } else if (objectPosition === 0) {
+    $previousBtn.hide();
+    $nextBtn.show();
+  } else if (objectPosition === ( activeObjects -1 )) {
+    $previousBtn.show();
+    $nextBtn.hide();
+  } else {
+    $previousBtn.show();
+    $nextBtn.show();
+  }
+}
+
+
+// The second Ajax Request
+$gallery.on('click', 'div', function(event) {
+  event.preventDefault();
+  const employeeSeed = $(this).find('a').attr('href');
+  const employeeObj = $(this);
+  getOneEmployeeDetails(employeeSeed, employeeObj);
+})
+
+
 // When prevArrow is clicked
 $previousBtn.click(function() {
   // Show the previous image
-  $objectPosition = $('.active').index($(this));
-
-  // for now log is undefined
-  console.log(prevAndNextBtn($('.active').eq($objectPosition - 1).find('a')));
+  let prevObject = $('.active').eq(objectPosition - 1);
+  let prevObjectSeed = $('.active').eq(objectPosition - 1).find('a').attr('href');
+  getOneEmployeeDetails(prevObjectSeed, prevObject);
 });
 
 // When nextArrow is clicked
 $nextBtn.click(function() {
   // Show the next image
-  $objectPosition = $('.active').index($(this));
+  let nextObject = $('.active').eq(objectPosition + 1);
+  let nextObjectSeed = $('.active').eq(objectPosition + 1).find('a').attr('href');
+  getOneEmployeeDetails(nextObjectSeed, nextObject);
 });
 
 
@@ -164,4 +171,8 @@ $searchInput.keyup(function() {
 }).keydown();
 
 
-// The navigating function
+
+// Run all the functions needed
+$(document).ready(function() {
+  getEmployees();
+})
